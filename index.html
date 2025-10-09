@@ -14,7 +14,7 @@
     }
     
     body {
-      background: linear-gradient(135deg, #1a2a6c, #2a5298, #3a7bd5);
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4edf9 100%);
       color: #333;
       min-height: 100vh;
       display: flex;
@@ -32,7 +32,27 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 20%);
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(26, 42, 108, 0.05) 0%, rgba(26, 42, 108, 0) 20%);
+      pointer-events: none;
+    }
+    
+    /* Interactive elements container */
+    #interactiveElements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+    
+    .interactive-element {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(26, 42, 108, 0.1);
+      transform: translate(-50%, -50%);
       pointer-events: none;
     }
     
@@ -40,7 +60,7 @@
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
       border-radius: 20px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
       padding: 40px;
       width: 100%;
       max-width: 500px;
@@ -48,7 +68,8 @@
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       position: relative;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(26, 42, 108, 0.1);
+      z-index: 10;
     }
     
     .profile::before {
@@ -58,14 +79,14 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(26, 42, 108, 0.05) 0%, transparent 70%);
       z-index: -1;
       transform: rotate(30deg);
     }
     
     .profile:hover {
       transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
     }
     
     .avatar-container {
@@ -80,7 +101,7 @@
       border-radius: 50%;
       object-fit: cover;
       border: 5px solid #fff;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       transition: all 0.4s ease;
     }
     
@@ -91,14 +112,14 @@
       left: -10px;
       right: -10px;
       bottom: -10px;
-      border: 2px solid rgba(255, 255, 255, 0.5);
+      border: 2px solid rgba(26, 42, 108, 0.2);
       border-radius: 50%;
       animation: pulse 2s infinite;
     }
     
     .avatar:hover {
       transform: scale(1.05);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
     }
     
     @keyframes pulse {
@@ -176,7 +197,7 @@
       align-items: center;
       justify-content: center;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
       position: relative;
       overflow: hidden;
       border: none;
@@ -204,7 +225,7 @@
     
     .btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
     
     .btn:hover::before {
@@ -264,6 +285,9 @@
 </head>
 
 <body>
+  <!-- Interactive elements container -->
+  <div id="interactiveElements"></div>
+  
   <main class="profile">
     <div class="avatar-container">
       <img class="avatar" src="6316c18ca67da202107.png?raw=true" alt="علي كامل | Ali Kamil">
@@ -304,5 +328,116 @@
       © 2025 Ali Kamil. All rights reserved.
     </div>
   </main>
+
+  <script>
+    // Professional website interactions
+    document.addEventListener('DOMContentLoaded', function() {
+      const interactiveElements = document.getElementById('interactiveElements');
+      
+      // Create floating elements for professional interaction
+      function createFloatingElements() {
+        for (let i = 0; i < 15; i++) {
+          const element = document.createElement('div');
+          element.classList.add('interactive-element');
+          
+          // Random size
+          const size = Math.random() * 40 + 10;
+          element.style.width = `${size}px`;
+          element.style.height = `${size}px`;
+          
+          // Random position
+          element.style.left = `${Math.random() * 100}%`;
+          element.style.top = `${Math.random() * 100}%`;
+          
+          // Random color with transparency
+          const hue = 220 + Math.random() * 20; // Blue tones
+          element.style.backgroundColor = `hsla(${hue}, 50%, 60%, 0.15)`;
+          
+          // Random animation
+          const duration = Math.random() * 20 + 10;
+          const delay = Math.random() * 5;
+          element.style.animation = `float${Math.floor(Math.random() * 3) + 1} ${duration}s infinite ease-in-out ${delay}s`;
+          
+          interactiveElements.appendChild(element);
+        }
+        
+        // Add CSS for floating animations
+        const style = document.createElement('style');
+        style.textContent = `
+          @keyframes float1 {
+            0%, 100% { transform: translate(-50%, -50%) translate(0, 0); }
+            50% { transform: translate(-50%, -50%) translate(20px, 20px); }
+          }
+          
+          @keyframes float2 {
+            0%, 100% { transform: translate(-50%, -50%) translate(0, 0); }
+            50% { transform: translate(-50%, -50%) translate(-30px, 15px); }
+          }
+          
+          @keyframes float3 {
+            0%, 100% { transform: translate(-50%, -50%) translate(0, 0); }
+            50% { transform: translate(-50%, -50%) translate(10px, -25px); }
+          }
+        `;
+        document.head.appendChild(style);
+      }
+      
+      // Mouse move interaction
+      document.addEventListener('mousemove', function(e) {
+        const elements = document.querySelectorAll('.interactive-element');
+        const mouseX = e.clientX / window.innerWidth;
+        const mouseY = e.clientY / window.innerHeight;
+        
+        elements.forEach(element => {
+          // Move elements slightly toward mouse position
+          const moveX = (mouseX - 0.5) * 30;
+          const moveY = (mouseY - 0.5) * 30;
+          element.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
+        });
+      });
+      
+      // Click interaction - create ripple effect
+      document.addEventListener('click', function(e) {
+        // Don't create effect if clicking on profile
+        if (!e.target.closest('.profile')) {
+          createRipple(e.clientX, e.clientY);
+        }
+      });
+      
+      // Function to create ripple effect
+      function createRipple(x, y) {
+        const ripple = document.createElement('div');
+        ripple.style.position = 'fixed';
+        ripple.style.left = `${x}px`;
+        ripple.style.top = `${y}px`;
+        ripple.style.width = '0';
+        ripple.style.height = '0';
+        ripple.style.borderRadius = '50%';
+        ripple.style.backgroundColor = 'rgba(26, 42, 108, 0.2)';
+        ripple.style.transform = 'translate(-50%, -50%)';
+        ripple.style.pointerEvents = 'none';
+        ripple.style.zIndex = '5';
+        document.body.appendChild(ripple);
+        
+        // Animate ripple
+        let size = 0;
+        const maxSize = Math.max(window.innerWidth, window.innerHeight) * 1.5;
+        const rippleInterval = setInterval(() => {
+          size += 25;
+          ripple.style.width = `${size}px`;
+          ripple.style.height = `${size}px`;
+          ripple.style.opacity = `${1 - size / maxSize}`;
+          
+          if (size > maxSize) {
+            clearInterval(rippleInterval);
+            document.body.removeChild(ripple);
+          }
+        }, 20);
+      }
+      
+      // Initialize floating elements
+      createFloatingElements();
+    });
+  </script>
 </body>
 </html>
