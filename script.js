@@ -125,15 +125,15 @@
   var GH = 'https://github.com/lo-oxll/';
   var PAGES = 'https://lo-oxll.github.io/';
   var PROJECTS = [
-    { ar: 'نظام إدارة المخازن والحسابات', en: 'Inventory & Accounting System',
-      dAr: 'المستودع الرئيسي — نظام لإدارة المخازن والحسابات (Supabase + JavaScript).', dEn: 'Main repository — an inventory & accounting system (Supabase + JavaScript).',
+    { ar: 'CV الإلكتروني', en: 'Online CV',
+      dAr: 'السيرة الذاتية الرقمية — الشهادات والخبرات والمهارات والمشاريع في أقسام متنقلة.', dEn: 'Digital CV — certificates, experience, skills and projects in navigable sections.',
       tech: 'JavaScript', live: PAGES + 'lo_oxll', repo: GH + 'lo_oxll' },
     { ar: 'QR STORE — حرفية وتقنية', en: 'QR STORE — Craft meets Tech',
       dAr: 'علامة عراقية تدمج التقنية بالحرفية (تطريز، قص ليزر، طباعة مطاطية).', dEn: 'An Iraqi brand blending technology with craftsmanship (embroidery, laser cutting, rubber stamping).',
       tech: 'HTML', live: PAGES + 'QR_code/', repo: GH + 'QR_code' },
     { ar: 'رمز العملة العراقية', en: 'Iraqi Currency Symbol',
       dAr: 'مشروع خاص برمز العملة العراقية.', dEn: 'A project dedicated to the Iraqi currency symbol.',
-      repo: GH + 'Iraq-currency-symbol' },
+      live: PAGES + 'Iraq-currency-symbol/', repo: GH + 'Iraq-currency-symbol' },
     { ar: 'نظام مخازن مطبعة شهداء الشرطة', en: 'Police Martyrs Press Warehouse System',
       dAr: 'نظام إدارة المخازن لمطبعة شهداء الشرطة.', dEn: 'Warehouse management system for the Police Martyrs Press.',
       live: PAGES + 'police_martyrs_press/', repo: GH + 'police_martyrs_press' },
