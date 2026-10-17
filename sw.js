@@ -1,9 +1,8 @@
 // Offline-first service worker. Bump CACHE_NAME when the asset list changes.
-const CACHE_NAME = 'ali-cv-v4';
+const CACHE_NAME = 'ali-cv-v5';
 const CORE_ASSETS = [
   './', './index.html', './styles.css', './script.js', './manifest.json',
-  './favicon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png',
-  './projects.json'
+  './favicon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -28,8 +27,8 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return; // fonts/CDN handled by the browser
 
-  // Network-first: pages and the generated projects list stay fresh.
-  if (request.mode === 'navigate' || url.pathname.endsWith('/projects.json')) {
+  // Network-first: pages stay fresh.
+  if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request)
         .then((res) => {
