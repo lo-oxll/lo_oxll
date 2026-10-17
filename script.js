@@ -13,7 +13,6 @@
     get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
     set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   };
-  var EMAIL = 'alikamilyaseen@gmail.com';
 
   /* ---------- Theme ---------- */
   var themeBtn = $('#themeToggle');
@@ -97,8 +96,8 @@
 
   /* ---------- Language (AR / EN) ---------- */
   var UI = {
-    ar: { title: 'علي كامل ياسين | متخصص إدارة تقنيات المعلومات ومحاسب سيطرة مخزنية', theme: 'تبديل الوضع الليلي والنهاري', live: 'الموقع', code: 'الكود', errName: 'يرجى كتابة الاسم.', errMsg: 'يرجى كتابة الرسالة.' },
-    en: { title: 'Ali Kamil Yaseen | IT Management Specialist & Inventory Control Accountant', theme: 'Toggle dark / light mode', live: 'Live', code: 'Code', errName: 'Please enter your name.', errMsg: 'Please enter a message.' }
+    ar: { title: 'علي كامل ياسين | متخصص إدارة تقنيات المعلومات ومحاسب سيطرة مخزنية', theme: 'تبديل الوضع الليلي والنهاري', live: 'الموقع', code: 'الكود' },
+    en: { title: 'Ali Kamil Yaseen | IT Management Specialist & Inventory Control Accountant', theme: 'Toggle dark / light mode', live: 'Live', code: 'Code' }
   };
   var lang = store.get('lang') === 'en' ? 'en' : 'ar';
   var langLabel = $('#langLabel');
@@ -222,18 +221,6 @@
       getLangs(p.repo.split('/').pop()).then(function (d) { renderLangs(langs, d); });
     });
   }
-
-  /* ---------- Contact form (mailto) ---------- */
-  var form = $('#contactForm'), err = $('#cfErr');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var name = $('#cfName').value.trim(), subj = $('#cfSubject').value.trim(), msg = $('#cfMsg').value.trim();
-    var m = !name ? UI[lang].errName : !msg ? UI[lang].errMsg : '';
-    err.hidden = !m; err.textContent = m;
-    if (m) return;
-    window.location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subj || 'CV Website Contact') +
-      '&body=' + encodeURIComponent(msg + '\n\n— ' + name);
-  });
 
   /* ---------- Init ---------- */
   $('#printBtn').addEventListener('click', function () { window.print(); });
