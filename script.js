@@ -1,256 +1,184 @@
 /**
- * Ali Kamil — personal site
- * Dependency-free enhancement layer:
- *  - light/dark theme toggle (persisted)
- *  - reveals the hero card once fonts/layout are ready
- *  - section nav acts as tabs: each button shows exactly one
- *    panel (About / Experience / Education / Skills / Projects / Contact)
- *    and hides the rest — nothing is shown until a tab is picked
- *  - respects prefers-reduced-motion throughout
+ * Ali Kamil Yaseen — digital CV
+ * Dependency-free: theme, AR/EN toggle, mobile nav, scroll reveal,
+ * live pinned projects, mailto contact form, service worker.
  */
 (function () {
   'use strict';
 
-  // ---- Theme toggle (light / dark) ----
   var root = document.documentElement;
-  var toggleBtn = document.getElementById('themeToggle');
+  var $ = function (s, c) { return (c || document).querySelector(s); };
+  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+  var store = {
+    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  };
+  var EMAIL = 'alikamilyaseen@gmail.com';
 
-  function getTheme() {
-    return root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  /* ---------- Theme ---------- */
+  var themeBtn = $('#themeToggle');
+  function setTheme(t) {
+    root.setAttribute('data-theme', t);
+    store.set('theme', t);
+    var meta = $('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', t === 'dark' ? '#0a0a0b' : '#f5f5f6');
   }
+  setTheme(root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
+  themeBtn.addEventListener('click', function () {
+    setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
 
-  function setTheme(theme) {
-    root.setAttribute('data-theme', theme);
-    try {
-      localStorage.setItem('theme', theme);
-    } catch (e) {}
-    if (toggleBtn) {
-      toggleBtn.setAttribute(
-        'aria-label',
-        theme === 'dark' ? 'التبديل إلى الوضع النهاري' : 'التبديل إلى الوضع الليلي'
-      );
+  /* ---------- Language (AR / EN) ---------- */
+  var UI = {
+    ar: {
+      title: 'علي كامل ياسين | محاسب ومراقب مخزني ومطور ويب',
+      themeLabel: 'تبديل الوضع الليلي والنهاري', menuLabel: 'القائمة',
+      live: 'الموقع', code: 'الكود', empty: 'لا توجد مشاريع حالياً.',
+      errName: 'يرجى كتابة الاسم.', errMsg: 'يرجى كتابة الرسالة.',
+      phName: '', fallbackDesc: 'مشروع ويب'
+    },
+    en: {
+      title: 'Ali Kamil Yaseen | Inventory Accountant & Web Developer',
+      themeLabel: 'Toggle dark / light mode', menuLabel: 'Menu',
+      live: 'Live', code: 'Code', empty: 'No projects yet.',
+      errName: 'Please enter your name.', errMsg: 'Please enter a message.',
+      phName: '', fallbackDesc: 'Web project'
     }
-  }
+  };
+  var lang = store.get('lang') === 'en' ? 'en' : 'ar';
+  var langLabel = $('#langLabel');
 
-  setTheme(getTheme());
-
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', function () {
-      setTheme(getTheme() === 'dark' ? 'light' : 'dark');
+  function applyLang(l) {
+    lang = l;
+    store.set('lang', l);
+    root.lang = l;
+    root.dir = l === 'en' ? 'ltr' : 'rtl';
+    $$('[data-en]').forEach(function (el) {
+      if (el.__ar === undefined) el.__ar = el.textContent;
+      el.textContent = l === 'en' ? el.getAttribute('data-en') : el.__ar;
     });
+    document.title = UI[l].title;
+    langLabel.textContent = l === 'en' ? 'ع' : 'EN';
+    $('#langToggle').setAttribute('aria-label', l === 'en' ? 'التبديل إلى العربية' : 'Switch to English');
+    themeBtn.setAttribute('aria-label', UI[l].themeLabel);
+    $('#burger').setAttribute('aria-label', UI[l].menuLabel);
+    renderProjects();
   }
+  $('#langToggle').addEventListener('click', function () { applyLang(lang === 'en' ? 'ar' : 'en'); });
 
-  var prefersReducedMotion = window.matchMedia(
-    '(prefers-reduced-motion: reduce)'
-  ).matches;
+  /* ---------- Nav ---------- */
+  var nav = $('#nav'), menu = $('#menu'), burger = $('#burger');
+  function closeMenu() { menu.classList.remove('is-open'); burger.setAttribute('aria-expanded', 'false'); }
+  burger.addEventListener('click', function () {
+    var open = menu.classList.toggle('is-open');
+    burger.setAttribute('aria-expanded', String(open));
+  });
+  $$('a', menu).forEach(function (a) { a.addEventListener('click', closeMenu); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+  document.addEventListener('click', function (e) { if (!nav.contains(e.target)) closeMenu(); });
+  window.addEventListener('scroll', function () { nav.classList.toggle('is-stuck', window.scrollY > 8); }, { passive: true });
 
-  // ---- Hero reveal ----
-  var card = document.getElementById('card');
-  if (card) {
-    if (prefersReducedMotion) {
-      card.style.opacity = '1';
-      card.style.transform = 'none';
-    } else {
-      var revealHero = function () {
-        card.classList.add('is-visible');
-      };
-      if (document.readyState === 'complete') {
-        requestAnimationFrame(revealHero);
-      } else {
-        window.addEventListener('load', function () {
-          requestAnimationFrame(revealHero);
-        });
-      }
-      window.setTimeout(revealHero, 1200);
-    }
-  }
+  /* ---------- Reveal + active link ---------- */
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } });
+    }, { threshold: 0.12 });
+    window.__observe = function (el) { io.observe(el); };
+    $$('.reveal').forEach(window.__observe);
 
-  // ---- Section nav as tabs ----
-  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.site-nav__link'));
-  var panels = Array.prototype.slice.call(document.querySelectorAll('.tab-panel'));
-  var navBar = document.querySelector('.site-nav__links');
-  var homeMark = document.querySelector('.site-nav__mark');
-  var aboutSection = document.getElementById('about');
-
-  function closeAllTabs() {
-    panels.forEach(function (panel) {
-      panel.classList.remove('is-visible');
-      panel.hidden = true;
-    });
-    navLinks.forEach(function (link) {
-      link.classList.remove('is-active');
-      link.setAttribute('aria-selected', 'false');
-    });
-    // Back to the home view: bring "About" back.
-    if (aboutSection) aboutSection.hidden = false;
-  }
-
-  function openTab(name) {
-    var found = false;
-    panels.forEach(function (panel) {
-      if (panel.id === name) {
-        found = true;
-        panel.hidden = false;
-        if (prefersReducedMotion) {
-          panel.classList.add('is-visible');
-        } else {
-          // Force layout so the fade-in transition replays every time.
-          panel.classList.remove('is-visible');
-          void panel.offsetWidth;
-          requestAnimationFrame(function () {
-            panel.classList.add('is-visible');
-          });
-        }
-      } else {
-        panel.classList.remove('is-visible');
-        panel.hidden = true;
-      }
-    });
-    if (!found) return false;
-    // A tab is now open: hide "About" so only the chosen section shows.
-    if (aboutSection) aboutSection.hidden = true;
-    navLinks.forEach(function (link) {
-      var isMatch = link.getAttribute('data-tab-target') === name;
-      link.classList.toggle('is-active', isMatch);
-      link.setAttribute('aria-selected', isMatch ? 'true' : 'false');
-    });
-    return true;
-  }
-
-  if (navBar) {
-    navBar.addEventListener('click', function (event) {
-      var btn = event.target.closest('[data-tab-target]');
-      if (!btn) return;
-      var name = btn.getAttribute('data-tab-target');
-      var wasActive = btn.classList.contains('is-active');
-      if (wasActive) {
-        // Tapping the open tab again closes it and returns to the home view.
-        closeAllTabs();
-        if (history.replaceState) history.replaceState(null, '', '#hero');
-      } else {
-        openTab(name);
-        if (history.replaceState) history.replaceState(null, '', '#' + name);
-      }
-    });
-  }
-
-  if (homeMark) {
-    homeMark.addEventListener('click', function () {
-      closeAllTabs();
-    });
-  }
-
-  // Deep-link support: if the page is opened with e.g. #education,
-  // open that tab directly instead of showing the empty home view.
-  var initialHash = window.location.hash ? window.location.hash.slice(1) : '';
-  if (initialHash && initialHash !== 'hero') {
-    openTab(initialHash);
-  }
-
-  // ---- "Back to top" button: only after scrolling ----
-  var skipTop = document.querySelector('.skip-top');
-  if (skipTop) {
-    var toggleSkipTop = function () {
-      skipTop.classList.toggle('is-shown', window.scrollY > 300);
-    };
-    toggleSkipTop();
-    window.addEventListener('scroll', toggleSkipTop, { passive: true });
-  }
-
-  // ---- Projects: read the pre-built, ordered list from projects.json ----
-  // projects.json is generated by a GitHub Action (see
-  // scripts/fetch-pinned.mjs) from the account's Pinned Repositories,
-  // in the exact order they're pinned. That means:
-  //  - reordering pins on github.com reorders the cards here
-  //  - pinning a new repo adds a new card in the right spot
-  //  - unpinning / deleting a repo removes its card
-  // No client-side sorting is done — the JSON order is authoritative.
-  // If the file can't be loaded (offline, first deploy, etc.) the
-  // static cards already baked into the HTML are kept as-is.
-  var projectGrid = document.querySelector('.project-grid');
-  if (projectGrid) {
-    var GITHUB_USER = 'lo-oxll';
-    var langColors = { JavaScript: 'lang-js', HTML: 'lang-html', CSS: 'lang-css' };
-
-    function showEmptyState() {
-      var p = document.createElement('p');
-      p.className = 'project-card__desc';
-      p.textContent = 'تعذر تحميل المشاريع حالياً. يمكنك تصفحها مباشرة على GitHub من الزر أدناه.';
-      projectGrid.innerHTML = '';
-      projectGrid.appendChild(p);
-    }
-
-    function renderRepos(repos) {
-      if (!Array.isArray(repos) || !repos.length) return false;
-      var frag = document.createDocumentFragment();
-      repos.forEach(function (repo) {
-        var a = document.createElement('a');
-        a.className = 'project-card';
-        if (repo.homepage) {
-          a.href = repo.homepage;
-        } else if (repo.has_pages) {
-          a.href = 'https://' + GITHUB_USER + '.github.io/' + repo.name + '/';
-        } else {
-          a.href = repo.html_url;
-        }
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-
-        var top = document.createElement('div');
-        top.className = 'project-card__top';
-
-        var name = document.createElement('span');
-        name.className = 'project-card__name';
-        name.setAttribute('lang', 'en');
-        name.setAttribute('dir', 'ltr');
-        name.textContent = repo.name;
-
-        var lang = document.createElement('span');
-        lang.className = 'project-card__lang';
-        if (repo.language) {
-          var dot = document.createElement('span');
-          dot.className = 'lang-dot ' + (langColors[repo.language] || '');
-          lang.appendChild(dot);
-          lang.appendChild(document.createTextNode(' ' + repo.language));
-        }
-
-        top.appendChild(name);
-        top.appendChild(lang);
-        a.appendChild(top);
-
-        if (repo.description) {
-          var desc = document.createElement('p');
-          desc.className = 'project-card__desc';
-          desc.textContent = repo.description;
-          a.appendChild(desc);
-        }
-        frag.appendChild(a);
+    var links = $$('a', menu);
+    var so = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        links.forEach(function (a) { a.classList.toggle('is-active', a.getAttribute('href') === '#' + en.target.id); });
       });
-      if (!frag.childNodes.length) return false;
-      projectGrid.innerHTML = '';
-      projectGrid.appendChild(frag);
-      return true;
-    }
-
-    fetch('projects.json', { cache: 'no-store' })
-      .then(function (res) {
-        if (!res.ok) throw new Error('projects.json not found');
-        return res.json();
-      })
-      .then(function (repos) {
-        if (!renderRepos(repos)) showEmptyState();
-      })
-      .catch(function () {
-        // Never fall back to a hardcoded list — it can go stale and
-        // resurrect projects that were since unpinned or deleted.
-        showEmptyState();
-      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    $$('main section[id]').forEach(function (s) { so.observe(s); });
+  } else {
+    window.__observe = function (el) { el.classList.add('is-in'); };
+    $$('.reveal').forEach(window.__observe);
   }
 
-  // ---- Register service worker for offline support ----
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function () {
-      navigator.serviceWorker.register('sw.js').catch(function () {});
+  /* ---------- Projects ---------- */
+  var META = {
+    lo_oxll: { ar: 'نظام إدارة المخازن والحسابات', en: 'Inventory & Accounting System' },
+    Inventory_Control_Accountant_2: { ar: 'نظام إدارة المخازن والحسابات — نسخة 2', en: 'Inventory & Accounting System — v2' },
+    police_martyrs_press: { ar: 'نظام مخازن مطبعة شهداء الشرطة', en: 'Police Martyrs Press Warehouse System' },
+    QR_code: { ar: 'QR STORE — حرفية وتقنية', en: 'QR STORE — Craft meets tech' },
+    'gissa-web': { ar: 'قصّة — متجر إلكتروني', en: 'Qissa — Online Store' },
+    Biocontrol: { ar: 'رَصَد — رصد الأنواع الغازية', en: 'Rasad — Invasive Species Monitoring' }
+  };
+
+  var FALLBACK = [
+    { name: 'lo_oxll', description: 'المستودع الرئيسي — نظام إدارة المخازن والحسابات (Supabase + JavaScript)', language: 'JavaScript', homepage: 'https://lo-oxll.github.io/lo_oxll', html_url: 'https://github.com/lo-oxll/lo_oxll' },
+    { name: 'QR_code', description: 'QR STORE — علامة عراقية تدمج التقنية بالحرفية (تطريز، قص ليزر، طباعة مطاطية)', language: 'HTML', homepage: 'https://lo-oxll.github.io/QR_code/', html_url: 'https://github.com/lo-oxll/QR_code' },
+    { name: 'Biocontrol', description: 'رَصَد (Rasad) — منصة مجتمعية للإبلاغ عن الأنواع الغازية في العراق', language: 'JavaScript', homepage: 'https://lo-oxll.github.io/Biocontrol/', html_url: 'https://github.com/lo-oxll/Biocontrol' }
+  ];
+  var projects = null, grid = $('#projectsGrid');
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function safeUrl(u) { return /^https:\/\//i.test(u || '') ? u : null; }
+  function linkBtn(href, icon, label) {
+    var a = el('a');
+    a.href = href; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    var i = el('i', icon); i.setAttribute('aria-hidden', 'true');
+    a.appendChild(i); a.appendChild(document.createTextNode(' ' + label));
+    return a;
+  }
+  function renderProjects() {
+    if (!projects) return;
+    grid.textContent = '';
+    if (!projects.length) { grid.appendChild(el('p', 'muted', UI[lang].empty)); return; }
+    projects.forEach(function (p) {
+      var m = META[p.name];
+      var card = el('article', 'card proj reveal');
+      var h = el('h3', m && lang === 'ar' ? 'is-ar' : '', m ? m[lang] : p.name);
+      var desc = lang === 'ar' && p.description ? p.description : (m ? m[lang] : UI[lang].fallbackDesc);
+      if (lang === 'en' && m) desc = m.en;
+      card.appendChild(h);
+      card.appendChild(el('p', 'muted', desc));
+      var meta = el('div', 'proj__meta');
+      if (p.language) meta.appendChild(el('span', 'lang', p.language));
+      var links = el('div', 'proj__links');
+      var live = safeUrl(p.homepage), repo = safeUrl(p.html_url);
+      if (live) links.appendChild(linkBtn(live, 'fa-solid fa-arrow-up-right-from-square', UI[lang].live));
+      if (repo) links.appendChild(linkBtn(repo, 'fa-brands fa-github', UI[lang].code));
+      meta.appendChild(links);
+      card.appendChild(meta);
+      grid.appendChild(card);
+      window.__observe(card);
     });
+  }
+  fetch('projects.json', { cache: 'no-cache' })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (d) { projects = Array.isArray(d) && d.length ? d : FALLBACK; })
+    .catch(function () { projects = FALLBACK; })
+    .then(renderProjects);
+
+  /* ---------- Contact form (mailto) ---------- */
+  var form = $('#contactForm'), err = $('#cfErr');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = $('#cfName').value.trim(), subj = $('#cfSubject').value.trim(), msg = $('#cfMsg').value.trim();
+    var m = !name ? UI[lang].errName : !msg ? UI[lang].errMsg : '';
+    err.hidden = !m; err.textContent = m;
+    if (m) return;
+    var body = msg + '\n\n— ' + name;
+    window.location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subj || 'CV Website Contact') + '&body=' + encodeURIComponent(body);
+  });
+
+  /* ---------- Misc ---------- */
+  $('#printBtn').addEventListener('click', function () { window.print(); });
+  $('#year').textContent = new Date().getFullYear();
+  if (lang === 'en') applyLang('en'); else { langLabel.textContent = 'EN'; }
+
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
   }
 })();

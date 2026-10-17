@@ -1,68 +1,56 @@
-// Minimal offline-first service worker for the static profile site.
-// Bump CACHE_NAME whenever the cached file list changes to force a refresh.
-const CACHE_NAME = 'ali-site-v3';
+// Offline-first service worker. Bump CACHE_NAME when the asset list changes.
+const CACHE_NAME = 'ali-cv-v4';
 const CORE_ASSETS = [
-  './',
-  './index.html',
-  './styles.css',
-  './script.js',
-  './manifest.json',
-  './favicon.jpeg',
-  './apple-touch-icon.png',
-  './avatar-96.webp',
-  './avatar-128.webp',
-  './avatar-256.webp',
-  './avatar-96.jpeg',
-  './avatar-128.jpeg',
-  './avatar-256.jpeg',
-  './icon-192.png',
-  './icon-512.png'
+  './', './index.html', './styles.css', './script.js', './manifest.json',
+  './favicon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png',
+  './projects.json'
 ];
 
 self.addEventListener('install', (event) => {
+  // allSettled: one missing optional asset must not abort the whole install.
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(CORE_ASSETS))
+    caches.open(CACHE_NAME).then((cache) => Promise.allSettled(CORE_ASSETS.map((u) => cache.add(u))))
   );
   self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)))
-    )
+    caches.keys()
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))))
+      .then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   if (request.method !== 'GET') return;
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return; // fonts/CDN handled by the browser
 
-  // Network-first for the generated projects list (and the old GitHub
-  // API path, kept here in case anything still references it) so the
-  // project order/content stays fresh whenever the pins change.
-  if (request.url.indexOf('projects.json') !== -1 || request.url.indexOf('api.github.com') !== -1) {
+  // Network-first: pages and the generated projects list stay fresh.
+  if (request.mode === 'navigate' || url.pathname.endsWith('/projects.json')) {
     event.respondWith(
-      fetch(request).catch(() => caches.match(request))
+      fetch(request)
+        .then((res) => {
+          if (res.ok) { const copy = res.clone(); caches.open(CACHE_NAME).then((c) => c.put(request, copy)); }
+          return res;
+        })
+        .catch(() => caches.match(request).then((hit) => hit || caches.match('./index.html')))
     );
     return;
   }
 
-  // Cache-first for same-origin static assets, with a network fallback
-  // that updates the cache for next time.
+  // Stale-while-revalidate for static assets.
   event.respondWith(
     caches.match(request).then((cached) => {
-      if (cached) return cached;
-      return fetch(request)
-        .then((response) => {
-          if (response && response.ok && request.url.startsWith(self.location.origin)) {
-            const clone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
-          }
-          return response;
+      const net = fetch(request)
+        .then((res) => {
+          if (res.ok) { const copy = res.clone(); caches.open(CACHE_NAME).then((c) => c.put(request, copy)); }
+          return res;
         })
-        .catch(() => caches.match('./index.html'));
+        .catch(() => cached);
+      return cached || net;
     })
   );
 });
