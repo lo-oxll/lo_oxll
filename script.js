@@ -202,20 +202,20 @@
     grid.textContent = '';
     PROJECTS.forEach(function (p) {
       var card = el('article', 'card proj reveal');
-      var head = el('div', 'proj__head');
-      head.appendChild(el('h3', '', p[lang]));
-      var code = linkBtn(p.repo, 'fa-brands fa-github', UI[lang].code);
-      code.className = 'proj__code';
-      head.appendChild(code);
-      card.appendChild(head);
+      card.appendChild(el('h3', '', p[lang]));
       var langs = el('div', 'langs');
       card.appendChild(langs);
       card.appendChild(el('p', 'muted', lang === 'en' ? p.dEn : p.dAr));
+      var actions = el('div', 'proj__actions');
       if (p.live) {
         var live = linkBtn(p.live, 'fa-solid fa-arrow-up-right-from-square', UI[lang].live);
-        live.className = 'btn btn--primary btn--sm proj__live';
-        card.appendChild(live);
+        live.className = 'btn btn--primary btn--sm';
+        actions.appendChild(live);
       }
+      var code = linkBtn(p.repo, 'fa-brands fa-github', UI[lang].code);
+      code.className = 'btn btn--sm';
+      actions.appendChild(code);
+      card.appendChild(actions);
       grid.appendChild(card);
       observe(card);
       getLangs(p.repo.split('/').pop()).then(function (d) { renderLangs(langs, d); });
