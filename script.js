@@ -138,7 +138,22 @@
       live: PAGES + 'police_martyrs_press/', repo: GH + 'police_martyrs_press' },
     { ar: 'رَصَد — رصد الأنواع الغازية', en: 'Rasad — Invasive Species Monitoring',
       dAr: 'منصة مجتمعية للإبلاغ عن الأنواع الغازية في العراق.', dEn: 'A community platform for reporting invasive species in Iraq.',
-      live: PAGES + 'Biocontrol/', repo: GH + 'Biocontrol' }
+      live: PAGES + 'Biocontrol/', repo: GH + 'Biocontrol' },
+    { ar: 'وقتي — حجز المواعيد', en: 'Waqti — Appointment Booking',
+      dAr: 'احجز موعدك عند أي نشاط، ويعمل بدون اتصال بالإنترنت.', dEn: 'Book an appointment with any business, and it works offline.',
+      live: PAGES + 'Slotify/', repo: GH + 'Slotify' },
+    { ar: 'محاكي الشبكات والألياف الضوئية', en: 'Network & FTTH Fiber Simulator',
+      dAr: 'محاكاة تعليمية لشبكات FTTH: ميزانية القدرة، OTDR، تذاكر الأعطال، SLA، VLAN وطرفية أوامر.', dEn: 'Educational FTTH network simulator: power budget, OTDR, incident tickets, SLA, VLAN and a command terminal.',
+      live: PAGES + 'Network/', repo: GH + 'Network' },
+    { ar: 'مختبر تحليل البيانات والإحصاء', en: 'Data Analysis & Statistics Lab',
+      dAr: 'استورد CSV أو Excel وشاهد الإحصاءات الوصفية والارتباط والقيم الشاذة والرسوم فورًا، داخل المتصفح.', dEn: 'Import CSV or Excel and instantly see descriptive stats, correlation, outliers and charts, all in the browser.',
+      live: PAGES + 'Statistics/', repo: GH + 'Statistics' },
+    { ar: 'نظام الكاشير', en: 'Cashier System',
+      dAr: 'نظام كاشير لإدارة المبيعات.', dEn: 'A cashier system for managing sales.',
+      live: PAGES + 'Cashier/', repo: GH + 'Cashier' },
+    { ar: 'مختبر الميزانية الشخصية', en: 'Personal Budget Lab',
+      dAr: 'أدخل الراتب والمصروفات والديون وهدف الادخار، وشاهد رصيدك المتوقع لـ 12 شهرًا بالدينار العراقي.', dEn: 'Enter salary, expenses, debts and savings goal, and see your projected 12-month balance in Iraqi dinars.',
+      live: PAGES + 'Expenses/', repo: GH + 'Expenses' }
   ];
   var grid = $('#projectsGrid');
 
