@@ -115,6 +115,7 @@
     langLabel.textContent = l === 'en' ? 'ع' : 'EN';
     $('#langToggle').setAttribute('aria-label', l === 'en' ? 'التبديل إلى العربية' : 'Switch to English');
     themeBtn.setAttribute('aria-label', UI[l].theme);
+    $('#homeBtn').setAttribute('aria-label', l === 'en' ? 'Home' : 'الرئيسية');
     renderProjects();
     buildPager();
   }
