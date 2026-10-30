@@ -19,7 +19,7 @@ jobs:
           node-version: 20
 
       - name: Fetch pinned repos in pin order
-        run: node scripts/fetch-pinned.mjs
+        run: node fetch-pinned.mjs
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
