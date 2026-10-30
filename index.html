@@ -2,6 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.github.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>علي كامل ياسين | متخصص إدارة تقنيات المعلومات ومحاسب سيطرة مخزنية</title>
   <meta name="description" content="السيرة الذاتية الرقمية لعلي كامل ياسين — متخصص إدارة تقنيات المعلومات ومحاسب سيطرة مخزنية في بغداد، العراق.">
@@ -23,18 +24,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="assets/fa/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
-  <script>
-    (function () {
-      try {
-        var t = localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        document.documentElement.setAttribute('data-theme', t);
-        var l = localStorage.getItem('lang');
-        if (l === 'en') { document.documentElement.lang = 'en'; document.documentElement.dir = 'ltr'; }
-      } catch (e) {}
-    })();
-  </script>
+  <noscript><link rel="stylesheet" href="noscript.css"></noscript>
+  <script src="theme-init.js"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -92,7 +85,7 @@
       <div class="wrap hero__in">
         <div class="avatar" aria-hidden="false">
           <span class="avatar__fallback">ع</span>
-          <img src="avatar.jpeg" alt="علي كامل ياسين" width="132" height="132" loading="eager" onerror="this.remove()">
+          <img src="avatar.jpeg" alt="علي كامل ياسين" width="132" height="132" loading="eager">
         </div>
         <p class="eyebrow" data-en="Digital CV">سيرة ذاتية رقمية</p>
         <h1 data-en="Ali Kamil Yaseen">علي كامل ياسين</h1>
@@ -261,7 +254,6 @@
     </div>
   </footer>
 
-  <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
   <script src="script.js" defer></script>
 </body>
 </html>

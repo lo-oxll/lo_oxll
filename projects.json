@@ -1,66 +1,110 @@
 [
   {
     "name": "lo_oxll",
-    "description": "المستودع الرئيسي — نظام إدارة المخازن والحسابات (Supabase + JavaScript)",
-    "language": "JavaScript",
-    "homepage": "https://lo-oxll.github.io/lo_oxll",
-    "html_url": "https://github.com/lo-oxll/lo_oxll",
-    "has_pages": true
+    "ar": "CV الإلكتروني",
+    "en": "Online CV",
+    "dAr": "السيرة الذاتية الرقمية — الشهادات والخبرات والمهارات والمشاريع في أقسام متنقلة.",
+    "dEn": "Digital CV — certificates, experience, skills and projects in navigable sections.",
+    "live": "https://lo-oxll.github.io/lo_oxll",
+    "repo": "https://github.com/lo-oxll/lo_oxll"
   },
   {
-    "name": "lo_oxl",
-    "description": null,
-    "language": null,
-    "homepage": "https://lo-oxll.github.io/lo_oxl/",
-    "html_url": "https://github.com/lo-oxll/lo_oxl",
-    "has_pages": true
+    "name": "Statistics",
+    "ar": "مختبر تحليل البيانات والإحصاء",
+    "en": "Data Analysis & Statistics Lab",
+    "dAr": "استورد CSV أو Excel وشاهد الإحصاءات الوصفية والارتباط والقيم الشاذة والرسوم فورًا، داخل المتصفح.",
+    "dEn": "Import CSV or Excel and instantly see descriptive stats, correlation, outliers and charts, all in the browser.",
+    "live": "https://lo-oxll.github.io/Statistics/",
+    "repo": "https://github.com/lo-oxll/Statistics"
   },
   {
-    "name": "QR_code",
-    "description": "QR STORE — علامة عراقية تدمج التقنية بالحرفية (تطريز، قص ليزر، طباعة مطاطية)",
-    "language": "HTML",
-    "homepage": "https://lo-oxll.github.io/QR_code/",
-    "html_url": "https://github.com/lo-oxll/QR_code",
-    "has_pages": true
-  },
-  {
-    "name": "gissa-web",
-    "description": "قصّة (Qissa) — متجر إلكتروني عربي لمنتجات العناية بالجسم",
-    "language": "JavaScript",
-    "homepage": "https://lo-oxll.github.io/gissa-web/",
-    "html_url": "https://github.com/lo-oxll/gissa-web",
-    "has_pages": true
-  },
-  {
-    "name": "nomoor",
-    "description": null,
-    "language": null,
-    "homepage": "https://lo-oxll.github.io/nomoor/",
-    "html_url": "https://github.com/lo-oxll/nomoor",
-    "has_pages": true
-  },
-  {
-    "name": "Biocontrol",
-    "description": "رَصَد (Rasad) — منصة مجتمعية للإبلاغ عن الأنواع الغازية في العراق",
-    "language": "JavaScript",
-    "homepage": "https://lo-oxll.github.io/Biocontrol/",
-    "html_url": "https://github.com/lo-oxll/Biocontrol",
-    "has_pages": true
+    "name": "Network",
+    "ar": "محاكي الشبكات والألياف الضوئية",
+    "en": "Network & FTTH Fiber Simulator",
+    "dAr": "محاكاة تعليمية لشبكات FTTH: ميزانية القدرة، OTDR، تذاكر الأعطال، SLA، VLAN وطرفية أوامر.",
+    "dEn": "Educational FTTH network simulator: power budget, OTDR, incident tickets, SLA, VLAN and a command terminal.",
+    "live": "https://lo-oxll.github.io/Network/",
+    "repo": "https://github.com/lo-oxll/Network"
   },
   {
     "name": "police_martyrs_press",
-    "description": null,
-    "language": null,
-    "homepage": "https://lo-oxll.github.io/police_martyrs_press/",
-    "html_url": "https://github.com/lo-oxll/police_martyrs_press",
-    "has_pages": true
+    "ar": "نظام مخازن مطبعة شهداء الشرطة",
+    "en": "Police Martyrs Press Warehouse System",
+    "dAr": "نظام إدارة المخازن لمطبعة شهداء الشرطة.",
+    "dEn": "Warehouse management system for the Police Martyrs Press.",
+    "live": "https://lo-oxll.github.io/police_martyrs_press/",
+    "repo": "https://github.com/lo-oxll/police_martyrs_press"
   },
   {
-    "name": "Inventory_Control_Accountant_2",
-    "description": "نظام إدارة المخازن والحسابات — نسخة تجريبية 2",
-    "language": "JavaScript",
-    "homepage": "https://lo-oxll.github.io/Inventory_Control_Accountant_2/",
-    "html_url": "https://github.com/lo-oxll/Inventory_Control_Accountant_2",
-    "has_pages": true
+    "name": "QR_code",
+    "ar": "QR STORE — حرفية وتقنية",
+    "en": "QR STORE — Craft meets Tech",
+    "dAr": "علامة عراقية تدمج التقنية بالحرفية (تطريز، قص ليزر، طباعة مطاطية).",
+    "dEn": "An Iraqi brand blending technology with craftsmanship (embroidery, laser cutting, rubber stamping).",
+    "live": "https://lo-oxll.github.io/QR_code/",
+    "repo": "https://github.com/lo-oxll/QR_code"
+  },
+  {
+    "name": "Cashier",
+    "ar": "نظام الكاشير",
+    "en": "Cashier System",
+    "dAr": "نظام كاشير لإدارة المبيعات.",
+    "dEn": "A cashier system for managing sales.",
+    "live": "https://lo-oxll.github.io/Cashier/",
+    "repo": "https://github.com/lo-oxll/Cashier"
+  },
+  {
+    "name": "Expenses",
+    "ar": "مختبر الميزانية الشخصية",
+    "en": "Personal Budget Lab",
+    "dAr": "أدخل الراتب والمصروفات والديون وهدف الادخار، وشاهد رصيدك المتوقع لـ 12 شهرًا بالدينار العراقي.",
+    "dEn": "Enter salary, expenses, debts and savings goal, and see your projected 12-month balance in Iraqi dinars.",
+    "live": "https://lo-oxll.github.io/Expenses/",
+    "repo": "https://github.com/lo-oxll/Expenses"
+  },
+  {
+    "name": "Iraq-currency-symbol",
+    "ar": "رمز العملة العراقية",
+    "en": "Iraqi Currency Symbol",
+    "dAr": "مشروع خاص برمز العملة العراقية.",
+    "dEn": "A project dedicated to the Iraqi currency symbol.",
+    "live": "https://lo-oxll.github.io/Iraq-currency-symbol/",
+    "repo": "https://github.com/lo-oxll/Iraq-currency-symbol"
+  },
+  {
+    "name": "IQD",
+    "ar": "IQD — تصاميم رمز العملة",
+    "en": "IQD — Currency Symbol Designs",
+    "dAr": "عدة تصاميم مقترحة للعملة العراقية لاختيار الأنسب منها، ويوضع بجانب السعر ليعبّر عن «د.ع» أو IQD.",
+    "dEn": "Several proposed designs for the Iraqi currency, to choose the most suitable one and place it next to the price to stand for \"IQD\" (د.ع).",
+    "live": "https://lo-oxll.github.io/IQD/",
+    "repo": "https://github.com/lo-oxll/IQD"
+  },
+  {
+    "name": "Keyboard",
+    "ar": "Keyboard — الخط الكوفي القديم",
+    "en": "Keyboard — Old Kufic Script",
+    "dAr": "نموذج لوحة مفاتيح لاختيار الأرقام وطريقة الكتابة باللغة العربية بالخط الكوفي القديم، والأرقام تدل على كل زاوية فيه.",
+    "dEn": "A keyboard prototype for choosing numerals and the way of writing Arabic in the Old Kufic script; the numbers mark each angle in it.",
+    "live": "https://lo-oxll.github.io/Keyboard/",
+    "repo": "https://github.com/lo-oxll/Keyboard"
+  },
+  {
+    "name": "Master",
+    "ar": "Master — دراسة الماجستير",
+    "en": "Master — Master's Studies",
+    "dAr": "مشروع يُعتمد عليه في دراسة الماجستير، قسم إدارة تقنيات المعلومات.",
+    "dEn": "A project relied on for the master's studies in the Information Technology Management department.",
+    "live": "https://lo-oxll.github.io/Master/",
+    "repo": "https://github.com/lo-oxll/Master"
+  },
+  {
+    "name": "Biocontrol",
+    "ar": "رَصَد — رصد الأنواع الغازية",
+    "en": "Rasad — Invasive Species Monitoring",
+    "dAr": "منصة مجتمعية للإبلاغ عن الأنواع الغازية في العراق.",
+    "dEn": "A community platform for reporting invasive species in Iraq.",
+    "live": "https://lo-oxll.github.io/Biocontrol/",
+    "repo": "https://github.com/lo-oxll/Biocontrol"
   }
 ]
