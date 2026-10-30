@@ -233,7 +233,11 @@
   var projectsFailed = false;
 
   /* ---------- Init ---------- */
-  $('#printBtn').addEventListener('click', function () { window.print(); });
+  $('#printBtn').addEventListener('click', function () {
+    // iOS home-screen apps ignore window.print(); open the CV PDF instead so it can be printed/shared.
+    if (window.navigator.standalone === true) { window.open('cv-ali-kamil-yaseen.pdf', '_blank'); return; }
+    try { window.print(); } catch (e) { window.open('cv-ali-kamil-yaseen.pdf', '_blank'); }
+  });
   $('#year').textContent = new Date().getFullYear();
   if (lang === 'en') applyLang('en'); else buildPager();
   loadProjects();

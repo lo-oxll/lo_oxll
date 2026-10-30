@@ -1,5 +1,5 @@
 // Offline-first service worker. Bump CACHE_NAME when the asset list changes.
-const CACHE_NAME = 'ali-cv-v9';
+const CACHE_NAME = 'ali-cv-v10';
 const CORE_ASSETS = [
   './', './index.html', './styles.css', './noscript.css', './theme-init.js', './script.js', './manifest.json',
   './projects.json', './languages.json',
