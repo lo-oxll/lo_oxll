@@ -1,21 +1,12 @@
 [
   {
-    "name": "lo_oxll",
-    "ar": "CV الإلكتروني",
-    "en": "Online CV",
-    "dAr": "السيرة الذاتية الرقمية — الشهادات والخبرات والمهارات والمشاريع في أقسام متنقلة.",
-    "dEn": "Digital CV — certificates, experience, skills and projects in navigable sections.",
-    "live": "https://lo-oxll.github.io/lo_oxll",
-    "repo": "https://github.com/lo-oxll/lo_oxll"
-  },
-  {
-    "name": "Statistics",
-    "ar": "مختبر تحليل البيانات والإحصاء",
-    "en": "Data Analysis & Statistics Lab",
-    "dAr": "استورد CSV أو Excel وشاهد الإحصاءات الوصفية والارتباط والقيم الشاذة والرسوم فورًا، داخل المتصفح.",
-    "dEn": "Import CSV or Excel and instantly see descriptive stats, correlation, outliers and charts, all in the browser.",
-    "live": "https://lo-oxll.github.io/Statistics/",
-    "repo": "https://github.com/lo-oxll/Statistics"
+    "name": "Master",
+    "ar": "Master — دراسة الماجستير",
+    "en": "Master — Master's Studies",
+    "dAr": "مشروع يُعتمد عليه في دراسة الماجستير، قسم إدارة تقنيات المعلومات.",
+    "dEn": "A project relied on for the master's studies in the Information Technology Management department.",
+    "live": "https://lo-oxll.github.io/Master/",
+    "repo": "https://github.com/lo-oxll/Master"
   },
   {
     "name": "Network",
@@ -27,6 +18,15 @@
     "repo": "https://github.com/lo-oxll/Network"
   },
   {
+    "name": "Statistics",
+    "ar": "مختبر تحليل البيانات والإحصاء",
+    "en": "Data Analysis & Statistics Lab",
+    "dAr": "استورد CSV أو Excel وشاهد الإحصاءات الوصفية والارتباط والقيم الشاذة والرسوم فورًا، داخل المتصفح.",
+    "dEn": "Import CSV or Excel and instantly see descriptive stats, correlation, outliers and charts, all in the browser.",
+    "live": "https://lo-oxll.github.io/Statistics/",
+    "repo": "https://github.com/lo-oxll/Statistics"
+  },
+  {
     "name": "police_martyrs_press",
     "ar": "نظام مخازن مطبعة شهداء الشرطة",
     "en": "Police Martyrs Press Warehouse System",
@@ -34,6 +34,15 @@
     "dEn": "Warehouse management system for the Police Martyrs Press.",
     "live": "https://lo-oxll.github.io/police_martyrs_press/",
     "repo": "https://github.com/lo-oxll/police_martyrs_press"
+  },
+  {
+    "name": "Expenses",
+    "ar": "مختبر الميزانية الشخصية",
+    "en": "Personal Budget Lab",
+    "dAr": "أدخل الراتب والمصروفات والديون وهدف الادخار، وشاهد رصيدك المتوقع لـ 12 شهرًا بالدينار العراقي.",
+    "dEn": "Enter salary, expenses, debts and savings goal, and see your projected 12-month balance in Iraqi dinars.",
+    "live": "https://lo-oxll.github.io/Expenses/",
+    "repo": "https://github.com/lo-oxll/Expenses"
   },
   {
     "name": "QR_code",
@@ -54,13 +63,13 @@
     "repo": "https://github.com/lo-oxll/Cashier"
   },
   {
-    "name": "Expenses",
-    "ar": "مختبر الميزانية الشخصية",
-    "en": "Personal Budget Lab",
-    "dAr": "أدخل الراتب والمصروفات والديون وهدف الادخار، وشاهد رصيدك المتوقع لـ 12 شهرًا بالدينار العراقي.",
-    "dEn": "Enter salary, expenses, debts and savings goal, and see your projected 12-month balance in Iraqi dinars.",
-    "live": "https://lo-oxll.github.io/Expenses/",
-    "repo": "https://github.com/lo-oxll/Expenses"
+    "name": "ScanMenu",
+    "ar": "المنيو الإلكتروني",
+    "en": "Digital Menu",
+    "dAr": "منيو إلكتروني يُعرض عبر مسح رمز QR.",
+    "dEn": "A digital menu viewed by scanning a QR code.",
+    "live": "https://lo-oxll.github.io/ScanMenu/",
+    "repo": "https://github.com/lo-oxll/ScanMenu"
   },
   {
     "name": "Iraq-currency-symbol",
@@ -90,15 +99,6 @@
     "repo": "https://github.com/lo-oxll/Keyboard"
   },
   {
-    "name": "Master",
-    "ar": "Master — دراسة الماجستير",
-    "en": "Master — Master's Studies",
-    "dAr": "مشروع يُعتمد عليه في دراسة الماجستير، قسم إدارة تقنيات المعلومات.",
-    "dEn": "A project relied on for the master's studies in the Information Technology Management department.",
-    "live": "https://lo-oxll.github.io/Master/",
-    "repo": "https://github.com/lo-oxll/Master"
-  },
-  {
     "name": "Biocontrol",
     "ar": "رَصَد — رصد الأنواع الغازية",
     "en": "Rasad — Invasive Species Monitoring",
@@ -106,5 +106,14 @@
     "dEn": "A community platform for reporting invasive species in Iraq.",
     "live": "https://lo-oxll.github.io/Biocontrol/",
     "repo": "https://github.com/lo-oxll/Biocontrol"
+  },
+  {
+    "name": "lo_oxll",
+    "ar": "CV الإلكتروني",
+    "en": "Online CV",
+    "dAr": "السيرة الذاتية الرقمية — الشهادات والخبرات والمهارات والمشاريع في أقسام متنقلة.",
+    "dEn": "Digital CV — certificates, experience, skills and projects in navigable sections.",
+    "live": "https://lo-oxll.github.io/lo_oxll",
+    "repo": "https://github.com/lo-oxll/lo_oxll"
   }
 ]
